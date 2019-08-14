@@ -13,7 +13,7 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "stackathon-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "code-share-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
   - npm test # test the code
   - npm run build-client # make the bundle
@@ -24,7 +24,7 @@ deploy: # see README for details on these keys
   skip_cleanup: true
   provider: heroku
   # app should be your heroku app name; see README
-  app: sarahstackathon
+  app: code-share-code
   # the secure key indicates an encrypted value; see README
   api_key:
     secure: fd00eH4ILaAMJHfvfM46rKcDjENSR6Ba9eWR3knI21cUZx6MH/H3wE7CepC27SEvaZIL9nDDZX2Lmc2b7Euazzu4IFPnXbFLK1eBhPiSlaRR3gOS2Wm6BbjjdviWQMoXFfIxXu4RMZvuETlHXLURWZ93TNw0PLe1Acv6QyxB2eI8LYyjLqU3NJw7V6MNavdQUMBhNqEhXGy6QU/pU4npPapDuZ28UXIP4/P1mZ2cfMhyXwsEkqhENT72NAu4T57i18eHY8TM5iFYnW1Vof4u+jB1V6C9LQIZJvE/qsmCNwrUtjQSj0ox/lMD4SzfVJCqt64/G2OwA3+8JovjEMGlFux+jzbEjc2eFTxZeHW8NdKq5PmH/Vu2u+lPwfNcsdC192vTiXVHPWlhn7KanSzHTdjdV9DjLhlne0r/gyNwFv8U7NQZI66poijcO9mfhNig2UjcOS6/H0+hNX+8NrWnjlytNpOTYe9ZdrD51OmOpAq4coc1eSEitdNBYNASEOCDrDt9PwqWJTDxP/ltCTYxEcv44abLrtS49kvlFlteIxNM1LB7uW9CZ3b1rGN35jBR7OQZLl27CWNhIB8wxavjaUlMVbfigXf2+Tkm+ykZerfyseof5f4GedGR8hdFlnPaEXHiz6Anykqgsl1lRg5n203IL/wL2n3EoKkGmPevu7Q=
