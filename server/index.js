@@ -9,8 +9,14 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
-const socketio = require('socket.io')
+//const socketio = require('socket.io')
+const WebSocket = require('ws')
+const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
+const ShareDB = require('sharedb')
+
 module.exports = app
+
+let share = new ShareDB()
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
@@ -104,7 +110,14 @@ const startListening = () => {
   // const io = socketio(server)
   // require('./socket')(io)
 
-  //set up sharedb instead here?
+  //set up sharedb
+  //using WebSocket instead of socetio server because we know it works with sharedb
+  //might revert back to societio once working
+  let wss = new WebSocket.Server({server: server})
+  wss.on('connection', function(ws) {
+    let stream = new WebSocketJSONStream(ws)
+    share.listen(stream)
+  })
 }
 
 const syncDb = () => db.sync()
