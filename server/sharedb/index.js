@@ -7,6 +7,7 @@
 
 // const ShareDB = require('sharedb')
 // const ShareDBMingoMemory = require('sharedb-mingo-memory')
+///something like sharedb-postgres check documentation for this
 // const WebSocket = require('ws') same
 // const WebSocketJSONStream = require('@teamwork/websocket-json-stream') same
 
