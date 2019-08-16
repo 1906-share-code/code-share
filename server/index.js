@@ -137,3 +137,22 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+/////////////hardcoded
+//createDoc(startListening)
+
+// Create initial document then fire callback
+// function createDoc(callback) {
+//   var connection = share.connect()
+//   var doc = connection.get('demo', 'inputbox')
+//   doc.fetch(function(err) {
+//     if (err) throw err
+//     if (doc.type === null) {
+//       doc.create({inputValue: ''}, callback)
+//       return
+//     }
+//     callback()
+//   })
+// }
+
+//ln 147 is a json object

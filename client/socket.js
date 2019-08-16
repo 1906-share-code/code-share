@@ -12,5 +12,7 @@ var sharedb = require('sharedb/lib/client')
 const socket = new WebSocket('ws://' + window.location.host)
 let connection = new sharedb.Connection(socket)
 
-export default connection
+//export default connection
 //export default socket
+
+//export default connection
