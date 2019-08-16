@@ -20,7 +20,10 @@ export class InputBox extends React.Component {
 
   componentDidMount() {
     let input = this.inputbox.current
-    const socket = new WebSocket('wss://' + window.location.host)
+    //const str = 'http:'
+    const str = window.location.protocol === 'https:' ? 'wss://' : 'ws://'
+    const socket = new WebSocket(str + window.location.host)
+
     let connection = new sharedb.Connection(socket)
     let doc = connection.get('demo', 'inputbox')
     doc.create({content: ''})
