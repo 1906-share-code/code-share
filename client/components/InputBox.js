@@ -26,10 +26,15 @@ export class InputBox extends React.Component {
 
     let connection = new sharedb.Connection(socket)
     let doc = connection.get('demo', 'inputbox')
-    doc.create({content: ''})
-    console.log(doc)
+
     doc.subscribe(function(err) {
       if (err) throw err
+      console.log('before ', doc.type)
+      if (doc.type === null) {
+        console.log('I am running ', doc.type)
+        doc.create({content: ''})
+      }
+      console.log('after', doc.type)
       let binding = new StringBinding(input, doc, ['content'])
       binding.setup()
     })
