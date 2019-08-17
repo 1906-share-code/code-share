@@ -3,6 +3,31 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+//import {DesktopNav, MobileNav} from './index'
+//import {Container} from 'semantic-ui-react'
+
+// const Navbar = ({handleClick, isLoggedIn, children, firstName}) => (
+//   <Container>
+//     <DesktopNav
+//       handleClick={handleClick}
+//       isLoggedIn={isLoggedIn}
+//       firstName={firstName}
+//     >
+//       {children}
+//     </DesktopNav>
+//     <MobileNav
+//       handleClick={handleClick}
+//       isLoggedIn={isLoggedIn}
+//       firstName={firstName}
+//     >
+//       {children}
+//     </MobileNav>
+//   </Container>
+// )
+
+// Navbar.propTypes = {
+//   children: PropTypes.node
+// }
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
