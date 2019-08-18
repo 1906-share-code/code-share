@@ -7,34 +7,36 @@ import {logout} from '../store'
 
 //import {DesktopNav, MobileNav} from './index'
 
-import {Button, Header, Icon, Segment} from 'semantic-ui-react'
+import {Container, Button, Header, Icon, Segment} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <Segment placeholder>
-    <Header>Code Share App</Header>
-    <nav>
-      {isLoggedIn ? (
-        <Segment.Inline>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </Segment.Inline>
-      ) : (
-        <Segment.Inline>
-          {/* The navbar will show these links before you log in */}
-          <Button>
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button>
-            <Link to="/signup">Sign Up</Link>
-          </Button>
-        </Segment.Inline>
-      )}
-    </nav>
-    <hr />
-  </Segment>
+  <Container>
+    <Segment placeholder>
+      <Header>Code Share App</Header>
+      <nav>
+        {isLoggedIn ? (
+          <Segment.Inline>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home">Home</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </Segment.Inline>
+        ) : (
+          <Segment.Inline>
+            {/* The navbar will show these links before you log in */}
+            <Button>
+              <Link to="/login">Login</Link>
+            </Button>
+            <Button>
+              <Link to="/signup">Sign Up</Link>
+            </Button>
+          </Segment.Inline>
+        )}
+      </nav>
+      <hr />
+    </Segment>
+  </Container>
 )
 
 //const Navbar = ({handleClick, isLoggedIn, children, firstName}) => (
