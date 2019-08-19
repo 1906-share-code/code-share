@@ -1,6 +1,8 @@
 import React from 'React'
 import {Controlled} from 'react-codemirror2'
 
+require('codemirror/mode/javascript/javascript')
+
 export class Editor extends React.Component {
   constructor(props) {
     super(props)
@@ -10,7 +12,7 @@ export class Editor extends React.Component {
       lineNumbers: true
     }
     this.state = {
-      value: 'console.log("Hello World")'
+      value: ''
     }
   }
 
