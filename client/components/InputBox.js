@@ -1,5 +1,7 @@
 import React from 'react'
+
 //import connection from '../socket'
+var CodeMirror = require('react-codemirror')
 
 var sharedb = require('sharedb/lib/client')
 
@@ -12,10 +14,17 @@ export class InputBox extends React.Component {
     this.inputbox = React.createRef()
 
     this.state = {
-      inputValue: ''
+      inputValue: '',
+      code: '//Code '
     }
 
-    //this.handleChange = this.handleChange.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
+  }
+
+  updateCode(newCode) {
+    this.setState({
+      code: newCode
+    })
   }
 
   componentDidMount() {
@@ -36,6 +45,7 @@ export class InputBox extends React.Component {
       }
       console.log('after', doc.type)
       let binding = new StringBinding(input, doc, ['content'])
+      //let binding = new StringBinding(CodeMirror, doc, ['content'])
       binding.setup()
     })
   }
@@ -53,6 +63,7 @@ export class InputBox extends React.Component {
 
   render() {
     console.log(this.state)
+    let options = {lineNumbers: true}
     let main = (
       <div>
         <h3>I exist to try and test if sharedb works</h3>
@@ -62,6 +73,12 @@ export class InputBox extends React.Component {
           // onChange={this.handleChange}
           ref={this.inputbox}
         />
+        <CodeMirror
+          value={this.state.code}
+          onChange={this.updateCode}
+          options={options}
+        />
+
         {/* <p>{this.state.inputValue}</p> */}
       </div>
     )
