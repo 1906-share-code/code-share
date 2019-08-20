@@ -1,30 +1,34 @@
-export const changeHandlers = {
+const changeHandlers = {
   '+input': handleInputChange,
   paste: null,
   delete: null
 }
 
-export function calculateOffsetIndex(text) {
-  let arr = text.split('/n') //what about the return key?
-  let s = 0
-  for (let i = 0; i < arr.length; i++) {
-    s += arr[i].length
+export function transformCodeMirrorChange(change, value) {
+  console.log(change)
+  return changeHandlers[change.origin](change, value)
+}
+
+function calculateOffsetIndex(value, line, ch) {
+  let arr = value.split('\n') //what about the return key?
+  let s = ch
+  for (let i = 0; i < line; i++) {
+    s += arr[i].length + 2
   }
   return s
 }
 
-export function handleInputChange(change, value) {
-  let operation = []
-  //console.log(change)
-  //let ch = change.from.ch
-  //let line = change.from.line
-  // console.log('line ' + line + 'change ' + ch)
-  //console.log(value)
-  //console.log(change.text[0])
-  let ind = calculateOffsetIndex(value)
-  operation.push(ind)
-  let ch = change.text[0]
-  operation.push(ch)
-  console.log(operation)
-  return operation
+function handleInputChange(change, value) {
+  let index = calculateOffsetIndex(value, change.from.line, change.from.ch)
+  let insertedChar
+  if (
+    change.text.length === 2 &&
+    change.text[0] === '' &&
+    change.text[1] === ''
+  ) {
+    insertedChar = '33'
+  } else {
+    insertedChar = change.text[0]
+  }
+  return [index, insertedChar]
 }
