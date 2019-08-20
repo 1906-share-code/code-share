@@ -12,7 +12,10 @@ const app = express()
 //const socketio = require('socket.io')
 const WebSocket = require('ws')
 const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
+
+const {type} = require('ot-text')
 const ShareDB = require('sharedb')
+ShareDB.types.register(type)
 
 module.exports = app
 

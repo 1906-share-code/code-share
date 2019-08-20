@@ -1,9 +1,14 @@
 import React from 'React'
-import {Controlled} from 'react-codemirror2'
+import {UnControlled} from 'react-codemirror2'
+import {type} from 'ot-text'
+import {
+  changeHandlers,
+  handleInputChange
+} from '../javascriptstuff/otoffsetfuncs'
 
 require('codemirror/mode/javascript/javascript')
-var sharedb = require('sharedb/lib/client')
-//import StringBinding from 'sharedb-string-binding'
+let sharedb = require('sharedb/lib/client')
+sharedb.types.register(type)
 
 export class Editor extends React.Component {
   constructor(props) {
@@ -15,10 +20,12 @@ export class Editor extends React.Component {
       mode: 'javascript',
       lineNumbers: true
     }
-    this.state = {
-      value: ''
-    }
+    //this.myCallback = this.bind.myCallback(this)
   }
+
+  // myCallback() {
+  //   //what
+  // }
 
   componentDidMount() {
     let input = this.codebox.current
@@ -30,29 +37,31 @@ export class Editor extends React.Component {
 
     doc.subscribe(function(err) {
       if (err) throw err
-      console.log('before ', doc.type)
       if (doc.type === null) {
-        console.log('I am running ', doc.type)
-        doc.create({content: ''})
+        // doc.create('ABCDEFG', 'text', {}, () => {
+        //   doc.submitOp([1, ' hi ', 2, {d: 3}, 1, 'hello'], {}, () => {
+        //     //console.log(doc)
+        //   })
+        // })
+        doc.create('', 'text', {}, () => {
+          // doc.submitOp(handleInputChange(), {}, () => {
+          //   console.log(doc)
+          // })
+        })
       }
-      console.log('after', doc.type)
-      //let binding = new StringBinding(input, doc, ['content'])
-      //binding.setup()
+      //we need to bind somehow
     })
   }
 
   render() {
     console.log(this.state)
     let main = (
-      <Controlled
+      <UnControlled
         ref={this.codebox}
-        type="text"
-        value={this.state.value}
         options={this.options}
-        onBeforeChange={(editor, data, value) => {
-          this.setState({value})
+        onChange={(editor, change, value) => {
+          handleInputChange(change, value)
         }}
-        onChange={(editor, data, value) => {}}
       />
     )
 
