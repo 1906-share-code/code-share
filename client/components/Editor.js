@@ -64,9 +64,9 @@ export class Editor extends React.Component {
             options={this.options}
             onChange={(editor, change, value) => {
               let op = transformCodeMirrorChange(change, value)
-              console.log(op)
+              console.log('some sort of string that says op', op)
               this.doc.submitOp(op, {}, () => {
-                console.log(this.doc.data)
+                console.log(JSON.stringify(this.doc.data))
               })
             }}
           />

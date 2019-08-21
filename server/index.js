@@ -20,6 +20,9 @@ ShareDB.types.register(type)
 module.exports = app
 
 let share = new ShareDB()
+share.use('op', context => {
+  console.log(context.op)
+})
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
