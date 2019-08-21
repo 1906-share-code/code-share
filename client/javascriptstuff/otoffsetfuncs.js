@@ -18,10 +18,14 @@ function calculateOffsetIndex(value, line, ch) {
   return s
 }
 
+function delCharsCount(removedArray) {
+  return removedArray.join(' ').length
+}
+
 function handleDeleteChange(change, value) {
   let index = calculateOffsetIndex(value, change.from.line, change.from.ch)
-  let numOfCharsToDelete = index - change.removed.length
-  return {d: numOfCharsToDelete}
+  let numOfCharsToDelete = delCharsCount(change.removed)
+  return [index, {d: numOfCharsToDelete}]
 }
 
 function handleInputChange(change, value) {
