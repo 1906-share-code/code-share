@@ -11,22 +11,16 @@ export class Editor extends React.Component {
   constructor(props) {
     super(props)
 
-    this.codebox = React.createRef()
+    this.editor = React.createRef()
     this.doc = false
 
     this.options = {
       mode: 'javascript',
       lineNumbers: true
     }
-    //this.myCallback = this.bind.myCallback(this)
   }
 
-  // myCallback() {
-  //   //what
-  // }
-
   componentDidMount() {
-    let input = this.codebox.current
     const str = window.location.protocol === 'https:' ? 'wss://' : 'ws://'
     const socket = new WebSocket(str + window.location.host)
 
@@ -35,42 +29,38 @@ export class Editor extends React.Component {
 
     this.doc.subscribe(err => {
       if (err) throw err
+      console.log(this.doc.data)
+      console.log('I an running in subribe')
+
       if (this.doc.type === null) {
-        // doc.create('ABCDEFG', 'text', {}, () => {
-        //   doc.submitOp([1, ' hi ', 2, {d: 3}, 1, 'hello'], {}, () => {
-        //     //console.log(doc)
-        //   })
-        // })
-        this.doc.create('', 'text', {}, () => {
-          // doc.submitOp(handleInputChange(), {}, () => {
-          //   console.log(doc)
-          // })
+        this.doc.create('', 'text', {}, error => {
+          if (!error) {
+            this.editor.current.editor.setValue(this.doc.data)
+          }
         })
       } else {
-        this.doc.del({}, () => {
-          this.doc.create('', 'text')
-        })
+        this.editor.current.editor.setValue(this.doc.data)
       }
-      //we need to bind somehow
     })
   }
 
   render() {
     return (
       <div>
-        {this.doc && (
-          <UnControlled
-            ref={this.codebox}
-            options={this.options}
-            onChange={(editor, change, value) => {
+        <UnControlled
+          ref={this.editor}
+          options={this.options}
+          onChange={(editor, change, value) => {
+            if (change.origin !== 'setValue') {
               let op = transformCodeMirrorChange(editor, change)
-              console.log('some sort of string that says op', op)
+              //console.log('some sort of string that says op', op)
+              console.log(change)
               this.doc.submitOp(op, {}, () => {
-                console.log(JSON.stringify(this.doc.data))
+                //console.log(JSON.stringify(this.doc.data))
               })
-            }}
-          />
-        )}
+            }
+          }}
+        />
       </div>
     )
   }
