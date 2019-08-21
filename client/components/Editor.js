@@ -29,8 +29,7 @@ export class Editor extends React.Component {
 
     this.doc.subscribe(err => {
       if (err) throw err
-      console.log(this.doc.data)
-      console.log('I an running in subribe')
+      console.log('subscribe ran')
 
       if (this.doc.type === null) {
         this.doc.create('', 'text', {}, error => {
@@ -41,11 +40,14 @@ export class Editor extends React.Component {
       } else {
         this.editor.current.editor.setValue(this.doc.data)
       }
+      this.doc.on('op', () => {
+        console.log('stuff happened')
+      })
     })
   }
 
   render() {
-    return (
+    let main = (
       <div>
         <UnControlled
           ref={this.editor}
@@ -53,8 +55,8 @@ export class Editor extends React.Component {
           onChange={(editor, change, value) => {
             if (change.origin !== 'setValue') {
               let op = transformCodeMirrorChange(editor, change)
-              //console.log('some sort of string that says op', op)
-              console.log(change)
+              console.log('some sort of string that says op', op)
+              //console.log(change)
               this.doc.submitOp(op, {}, () => {
                 //console.log(JSON.stringify(this.doc.data))
               })
@@ -63,5 +65,7 @@ export class Editor extends React.Component {
         />
       </div>
     )
+    let loading = <div>Waiting</div>
+    return this.editor ? main : loading
   }
 }
