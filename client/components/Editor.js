@@ -40,8 +40,39 @@ export class Editor extends React.Component {
       } else {
         this.editor.current.editor.setValue(this.doc.data)
       }
-      this.doc.on('op', () => {
-        console.log('stuff happened')
+      this.doc.on('op', (op, local) => {
+        console.log('we are in this.doc.on function')
+        if (!local) {
+          console.log(op)
+          //then we want to translate op back into javascript stuff
+          //let lineAndCharactor = this.editor.current.editor.posFromIndex(op[0])
+
+          let cursor = 0
+          op.forEach(item => {
+            //if its insert or string or delete move cursor approate
+            //we need to do the operation duh
+
+            if (typeof item === 'number') {
+              cursor += item
+            } else if (typeof item === 'string') {
+              let lineAndCharactor = this.editor.current.editor.posFromIndex(
+                cursor
+              )
+              this.editor.current.editor.replaceRange(
+                item,
+                lineAndCharactor,
+                undefined,
+                'server'
+              )
+              cursor += item.length
+            } else if (typeof item === 'object') {
+              console.log('object')
+            } else {
+              console.log('made it to esle')
+            }
+          })
+        }
+        console.log('end of func')
       })
     })
   }
@@ -53,7 +84,7 @@ export class Editor extends React.Component {
           ref={this.editor}
           options={this.options}
           onChange={(editor, change, value) => {
-            if (change.origin !== 'setValue') {
+            if (change.origin !== 'setValue' && change.origin !== 'server') {
               let op = transformCodeMirrorChange(editor, change)
               console.log('some sort of string that says op', op)
               //console.log(change)
