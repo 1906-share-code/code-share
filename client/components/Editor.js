@@ -35,7 +35,7 @@ export class Editor extends React.Component {
         this.editor.current.editor.setValue(this.doc.data)
       }
       this.doc.on('op', (op, local) => {
-        operationsfunc(op, local, this.editor)
+        operationsfunc(op, local, this.editor.current.editor)
       })
     })
   }

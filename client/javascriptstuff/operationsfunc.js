@@ -20,23 +20,16 @@ function numberOp(cursor, item) {
 }
 
 function stringOp(cursor, item, editor) {
-  let lineAndCharactor = editor.current.editor.posFromIndex(cursor)
-  editor.current.editor.replaceRange(
-    item,
-    lineAndCharactor,
-    undefined,
-    'server'
-  )
+  let lineAndCharactor = editor.posFromIndex(cursor)
+  editor.replaceRange(item, lineAndCharactor, undefined, 'server')
   cursor += item.length
   return cursor
 }
 
 function objectOp(cursor, item, editor) {
-  let beginninglineAndCharactor = editor.current.editor.posFromIndex(cursor)
-  let endinglineAndCharactor = editor.current.editor.posFromIndex(
-    cursor + item.d
-  )
-  editor.current.editor.replaceRange(
+  let beginninglineAndCharactor = editor.posFromIndex(cursor)
+  let endinglineAndCharactor = editor.posFromIndex(cursor + item.d)
+  editor.replaceRange(
     '',
     beginninglineAndCharactor,
     endinglineAndCharactor,
