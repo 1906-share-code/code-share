@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import {UnControlled} from 'react-codemirror2'
 import {transformCodeMirrorChange} from '../javascriptstuff/otoffsetfuncs'
 import connection from '../connect'
