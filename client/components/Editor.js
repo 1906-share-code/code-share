@@ -1,11 +1,10 @@
 import React from 'React'
 import {UnControlled} from 'react-codemirror2'
-import {type} from 'ot-text'
 import {transformCodeMirrorChange} from '../javascriptstuff/otoffsetfuncs'
+import connection from '../connect'
+import {operationsfunc} from '../javascriptstuff/operationsfunc'
 
 require('codemirror/mode/javascript/javascript')
-let sharedb = require('sharedb/lib/client')
-sharedb.types.register(type)
 
 export class Editor extends React.Component {
   constructor(props) {
@@ -21,10 +20,6 @@ export class Editor extends React.Component {
   }
 
   componentDidMount() {
-    const str = window.location.protocol === 'https:' ? 'wss://' : 'ws://'
-    const socket = new WebSocket(str + window.location.host)
-
-    let connection = new sharedb.Connection(socket)
     this.doc = connection.get('demo', 'inputbox')
 
     this.doc.subscribe(err => {
@@ -40,44 +35,7 @@ export class Editor extends React.Component {
         this.editor.current.editor.setValue(this.doc.data)
       }
       this.doc.on('op', (op, local) => {
-        if (!local) {
-          //then we want to translate op back into javascript
-          let cursor = 0
-          op.forEach(item => {
-            if (typeof item === 'number') {
-              cursor += item
-            } else if (typeof item === 'string') {
-              let lineAndCharactor = this.editor.current.editor.posFromIndex(
-                cursor
-              )
-              this.editor.current.editor.replaceRange(
-                item,
-                lineAndCharactor,
-                undefined,
-                'server'
-              )
-              cursor += item.length
-            } else if (typeof item === 'object') {
-              console.log('object')
-              let beginninglineAndCharactor = this.editor.current.editor.posFromIndex(
-                cursor
-              )
-              let endinglineAndCharactor = this.editor.current.editor.posFromIndex(
-                cursor + item.d
-              )
-              this.editor.current.editor.replaceRange(
-                '',
-                beginninglineAndCharactor,
-                endinglineAndCharactor,
-                'server'
-              )
-
-              cursor += item.d
-            } else {
-              console.log('error')
-            }
-          })
-        }
+        operationsfunc(op, local, this.editor.current.editor)
       })
     })
   }
