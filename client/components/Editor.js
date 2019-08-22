@@ -1,11 +1,9 @@
 import React from 'React'
 import {UnControlled} from 'react-codemirror2'
-import {type} from 'ot-text'
 import {transformCodeMirrorChange} from '../javascriptstuff/otoffsetfuncs'
+import connection from '../connect'
 
 require('codemirror/mode/javascript/javascript')
-let sharedb = require('sharedb/lib/client')
-sharedb.types.register(type)
 
 export class Editor extends React.Component {
   constructor(props) {
@@ -21,10 +19,6 @@ export class Editor extends React.Component {
   }
 
   componentDidMount() {
-    const str = window.location.protocol === 'https:' ? 'wss://' : 'ws://'
-    const socket = new WebSocket(str + window.location.host)
-
-    let connection = new sharedb.Connection(socket)
     this.doc = connection.get('demo', 'inputbox')
 
     this.doc.subscribe(err => {
