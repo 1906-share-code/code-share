@@ -67,6 +67,20 @@ export class Editor extends React.Component {
               cursor += item.length
             } else if (typeof item === 'object') {
               console.log('object')
+              let beginninglineAndCharactor = this.editor.current.editor.posFromIndex(
+                cursor
+              )
+              let endinglineAndCharactor = this.editor.current.editor.posFromIndex(
+                cursor + item.d
+              )
+              this.editor.current.editor.replaceRange(
+                '',
+                beginninglineAndCharactor,
+                endinglineAndCharactor,
+                'server'
+              )
+
+              cursor += item.d
             } else {
               console.log('made it to esle')
             }
