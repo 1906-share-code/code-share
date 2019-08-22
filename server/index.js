@@ -9,7 +9,6 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
-//const socketio = require('socket.io')
 const WebSocket = require('ws')
 const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
 
@@ -109,13 +108,9 @@ const startListening = () => {
     console.log(`Mixing it up on port ${PORT}`)
   )
 
-  // set up our socket control center
-  // const io = socketio(server)
-  // require('./socket')(io)
-
   //set up sharedb
   //using WebSocket instead of socetio server because we know it works with sharedb
-  //might revert back to societio once working
+
   let wss = new WebSocket.Server({server: server})
   wss.on('connection', function(ws) {
     let stream = new WebSocketJSONStream(ws)
@@ -140,22 +135,3 @@ if (require.main === module) {
 } else {
   createApp()
 }
-
-/////////////hardcoded
-//createDoc(startListening)
-
-// Create initial document then fire callback
-// function createDoc(callback) {
-//   var connection = share.connect()
-//   var doc = connection.get('demo', 'inputbox')
-//   doc.fetch(function(err) {
-//     if (err) throw err
-//     if (doc.type === null) {
-//       doc.create({inputValue: ''}, callback)
-//       return
-//     }
-//     callback()
-//   })
-// }
-
-//ln 147 is a json object

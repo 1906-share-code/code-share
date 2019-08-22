@@ -29,7 +29,6 @@ export class Editor extends React.Component {
 
     this.doc.subscribe(err => {
       if (err) throw err
-      console.log('subscribe ran')
 
       if (this.doc.type === null) {
         this.doc.create('', 'text', {}, error => {
@@ -41,17 +40,10 @@ export class Editor extends React.Component {
         this.editor.current.editor.setValue(this.doc.data)
       }
       this.doc.on('op', (op, local) => {
-        console.log('we are in this.doc.on function')
         if (!local) {
-          console.log(op)
-          //then we want to translate op back into javascript stuff
-          //let lineAndCharactor = this.editor.current.editor.posFromIndex(op[0])
-
+          //then we want to translate op back into javascript
           let cursor = 0
           op.forEach(item => {
-            //if its insert or string or delete move cursor approate
-            //we need to do the operation duh
-
             if (typeof item === 'number') {
               cursor += item
             } else if (typeof item === 'string') {
@@ -82,11 +74,10 @@ export class Editor extends React.Component {
 
               cursor += item.d
             } else {
-              console.log('made it to esle')
+              console.log('error')
             }
           })
         }
-        console.log('end of func')
       })
     })
   }
@@ -100,11 +91,7 @@ export class Editor extends React.Component {
           onChange={(editor, change, value) => {
             if (change.origin !== 'setValue' && change.origin !== 'server') {
               let op = transformCodeMirrorChange(editor, change)
-              console.log('some sort of string that says op', op)
-              //console.log(change)
-              this.doc.submitOp(op, {}, () => {
-                //console.log(JSON.stringify(this.doc.data))
-              })
+              this.doc.submitOp(op, {}, () => {})
             }
           }}
         />
