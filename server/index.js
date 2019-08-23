@@ -11,14 +11,29 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const WebSocket = require('ws')
 const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
-
+const {ConnectionStringParser} = require('connection-string-parser')
 const {type} = require('ot-text')
 const ShareDB = require('sharedb')
 ShareDB.types.register(type)
-const sdb = require('sharedb-postgres')({
-  host: 'localhost',
-  database: 'code-share'
+const connectionStringParser = new ConnectionStringParser({
+  scheme: 'postgres',
+  hosts: []
 })
+const pkg = require('../package.json')
+
+const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
+const connectionObject = connectionStringParser.parse(
+  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`
+)
+
+const sharedbconfig = {
+  user: connectionObject.username,
+  host: connectionObject.hosts[0].host,
+  database: connectionObject.endpoint,
+  password: connectionObject.password,
+  port: connectionObject.hosts[0].port
+}
+const sdb = require('sharedb-postgres')(sharedbconfig)
 const share = new ShareDB({db: sdb})
 
 module.exports = app
