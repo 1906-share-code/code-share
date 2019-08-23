@@ -15,10 +15,13 @@ const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
 const {type} = require('ot-text')
 const ShareDB = require('sharedb')
 ShareDB.types.register(type)
+const sdb = require('sharedb-postgres')({
+  host: 'localhost',
+  database: 'code-share'
+})
+const share = new ShareDB({db: sdb})
 
 module.exports = app
-
-let share = new ShareDB()
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
