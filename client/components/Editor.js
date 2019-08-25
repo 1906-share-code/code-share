@@ -49,7 +49,9 @@ export class Editor extends React.Component {
           onChange={(editor, change, value) => {
             if (change.origin !== 'setValue' && change.origin !== 'server') {
               let op = transformCodeMirrorChange(editor, change)
-              this.doc.submitOp(op, {}, () => {})
+              this.doc.submitOp(op, {}, err => {
+                console.log('submit op error', err)
+              })
             }
           }}
         />
