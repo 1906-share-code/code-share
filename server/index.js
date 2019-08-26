@@ -11,44 +11,18 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const WebSocket = require('ws')
 const WebSocketJSONStream = require('@teamwork/websocket-json-stream')
-const {ConnectionStringParser} = require('connection-string-parser')
+
 const {type} = require('ot-text')
 const ShareDB = require('sharedb')
 ShareDB.types.register(type)
-const MongoClient = require('mongodb').MongoClient
-const assert = require('assert')
-const url = 'mongodb://localhost:27017'
-const dbName = 'code-share'
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, client) {
-  assert.equal(null, err)
-  console.log('Connected successfully to server in mongodb')
 
-  const db = client.db(dbName)
+const mdb = require('sharedb-mongo')(
+  process.env.NODE_ENV === 'development'
+    ? 'mongodb://localhost:27017/code-share'
+    : process.env.MONGODB_URI
+) // hardcoded fix later
 
-  client.close()
-})
-
-// Connection URL
-// const connectionStringParser = new ConnectionStringParser({
-//   scheme: 'postgres',
-//   hosts: []
-// })
-//const pkg = require('../package.json')
-// const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
-// const connectionObject = connectionStringParser.parse(
-//   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`
-// )
-
-// const sharedbconfig = {
-//   user: connectionObject.username,
-//   host: connectionObject.hosts[0].host,
-//   database: connectionObject.endpoint,
-//   password: connectionObject.password,
-//   port: connectionObject.hosts[0].port
-// }
-// const sdb = require('sharedb-postgres')(sharedbconfig)
-const share = new ShareDB()
+const share = new ShareDB({db: mdb})
 
 module.exports = app
 
