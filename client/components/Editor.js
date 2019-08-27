@@ -20,8 +20,14 @@ export class Editor extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.name)
-    this.doc = connection.get('demo', this.props.match.params.name)
+    //console.log(this.props)
+
+    this.doc = connection.get(
+      this.props.match.params.user,
+      this.props.match.params.name
+    )
+    console.log(this.doc.collection)
+    console.log(this.doc.id)
 
     this.doc.subscribe(err => {
       if (err) throw err

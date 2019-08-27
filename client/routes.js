@@ -26,7 +26,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/documents/:name" component={Editor} />
+            <Route path="/:user/:name" component={Editor} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
