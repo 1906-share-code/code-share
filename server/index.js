@@ -119,13 +119,13 @@ const startListening = () => {
 
   let wss = new WebSocket.Server({server: server})
   wss.on('connection', function(ws) {
+    let stream = new WebSocketJSONStream(ws)
+    share.listen(stream)
     ws.isAlive = true
     ws.on('pong', () => {
       ws.isAlive = true
       return ws.isAlive
     })
-    let stream = new WebSocketJSONStream(ws)
-    share.listen(stream)
   })
 
   const interval = setInterval(() => {
