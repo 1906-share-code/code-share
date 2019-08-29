@@ -119,9 +119,19 @@ const startListening = () => {
 
   let wss = new WebSocket.Server({server: server})
   wss.on('connection', function(ws) {
+    ws.isAlive = true
+    ws.on('pong', () => (ws.isAlive = true))
     let stream = new WebSocketJSONStream(ws)
     share.listen(stream)
   })
+
+  const interval = setInterval(() => {
+    wss.clients.forEach(ws => {
+      if (ws.isAlive === false) return ws.terminate()
+      ws.isAlive = false
+      ws.ping('', false, true)
+    })
+  }, 30000)
 }
 
 const syncDb = () => db.sync()
