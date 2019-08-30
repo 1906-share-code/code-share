@@ -121,20 +121,20 @@ const startListening = () => {
   wss.on('connection', function(ws) {
     let stream = new WebSocketJSONStream(ws)
     share.listen(stream)
-    //ws.isAlive = true
-    //ws.on('pong', () => {
-    //  ws.isAlive = true
-    //  return ws.isAlive
-    //})
+    ws.isAlive = true
+    ws.on('pong', () => {
+      ws.isAlive = true
+      return ws.isAlive
+    })
   })
 
-  // const interval = setInterval(() => {
-  //   wss.clients.forEach(ws => {
-  //     if (ws.isAlive === false) return ws.terminate()
-  //     ws.isAlive = false
-  //     ws.ping('', false, true)
-  //   })
-  // }, 30000)
+  const interval = setInterval(() => {
+    wss.clients.forEach(ws => {
+      if (ws.isAlive === false) return ws.terminate()
+      ws.isAlive = false
+      ws.ping('', false, true)
+    })
+  }, 30000)
 }
 
 const syncDb = () => db.sync()
