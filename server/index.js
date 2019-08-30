@@ -127,6 +127,7 @@ const startListening = () => {
 
   const interval = setInterval(() => {
     wss.clients.forEach(ws => {
+      console.log('in interval')
       if (ws.isAlive === false) return ws.terminate()
       ws.isAlive = false
       ws.ping('', false, true)
