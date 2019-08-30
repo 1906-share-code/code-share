@@ -20,7 +20,7 @@ const mdb = require('sharedb-mongo')(
   process.env.NODE_ENV === 'development'
     ? 'mongodb://localhost:27017/code-share'
     : process.env.MONGODB_URI
-)
+) // hardcoded fix later
 
 const share = new ShareDB({db: mdb})
 
