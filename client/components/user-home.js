@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
 import {Editor} from './Editor'
+import {Form} from './Form'
 
 /**
  * COMPONENT
@@ -10,11 +11,13 @@ import {Editor} from './Editor'
 
 export const UserHome = props => {
   const {email} = props
+  const username = email.slice(0, email.indexOf('@'))
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
-      <Editor />
+      {/* <Editor /> */}
+      <Form username={username} />
     </div>
   )
 }
