@@ -2,21 +2,24 @@ import axios from 'axios'
 
 const UPDATE_DOCS_TABLE = 'UPDATE_DOCS_TABLE'
 
-export const updateDocsTable = update => ({
-  type: UPDATE_DOCS_TABLE,
-  update
+export const updateDocsTable = () => ({
+  type: UPDATE_DOCS_TABLE
 })
 
 export const updateDocThunk = (userId, docname) => async dispatch => {
-  const {data} = await axios.post(`/api/docs/${userId}/${docname}`)
-  dispatch(updateDocsTable(data))
+  console.log('you made it to updateDocThunk')
+  const {data} = await axios.put(`/api/docs/${userId}/${docname}`)
+  console.log(data)
+  dispatch(updateDocsTable())
 }
 
-export function docReducer(update = '', action) {
+export default function docReducer(state = {}, action) {
+  console.log('made it to reducer')
+  console.log(action)
   switch (action.type) {
     case UPDATE_DOCS_TABLE:
       return action.update
     default:
-      return update
+      return state
   }
 }

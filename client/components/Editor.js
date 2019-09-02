@@ -1,8 +1,10 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {UnControlled} from 'react-codemirror2'
 import {transformCodeMirrorChange} from '../javascriptstuff/otoffsetfuncs'
 import connection from '../connect'
 import {operationsfunc} from '../javascriptstuff/operationsfunc'
+import {withRouter} from 'react-router-dom'
 
 require('codemirror/mode/javascript/javascript')
 
@@ -68,3 +70,5 @@ export class Editor extends React.Component {
     return this.editor ? main : loading
   }
 }
+
+export default withRouter(connect(null, null)(Editor))

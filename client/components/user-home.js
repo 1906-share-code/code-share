@@ -12,14 +12,14 @@ import {MyForm} from './MyForm'
 export const UserHome = props => {
   const {email} = props
   const userId = props.id
-  const username = `u${props.id}`
-  console.log(username)
+  console.log(props)
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
       {/* <Editor /> */}
-      <MyForm userId={userId} username={username} />
+      {/* <MyForm userId={userId} /> */}
+      <MyForm props={props} />
     </div>
   )
 }

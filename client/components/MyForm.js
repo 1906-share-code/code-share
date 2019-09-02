@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import connection from '../connect'
+//import connection from '../connect'
 import {withRouter} from 'react-router-dom'
 import {updateDocThunk} from '../store/doc'
-import {Container, Form as AForm, TextArea, Button} from 'semantic-ui-react'
+import {Container, Form, TextArea, Button} from 'semantic-ui-react'
 
 //Props has username availabe, so why dont we
 //make a query to the database to check all documents
@@ -22,10 +22,10 @@ export class MyForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    //stuff
-    console.log(connection)
-  }
+  // componentDidMount() {
+  //   //stuff
+
+  // }
 
   handleChange(event) {
     this.setState({
@@ -36,20 +36,25 @@ export class MyForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('you clicked me')
-    let userId = this.props.userId
+    let userId = this.props.props.id
+    console.log(userId)
     let docname = this.state.doc
+    console.log(docname)
+    //console.log(this.state)
+    // console.log(this.props.match)
     console.log(this.props)
-    console.log(this.state)
-    console.log(this.props.match)
+    //console.log(this.state)
+    //this.props.update(userId, docname)
 
     //this.props.postDoc(userId, docname)
-    // this.props.history.push(`/products/${productId}`)
+    //this.props.history.push(`/docs/${userId}/${docname}`)
+    console.log(this.props.props.history.push(`/docs/${userId}/${docname}`))
   }
 
   render() {
     let main = (
       <Container>
-        <AForm onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <TextArea
             className=""
             id="doc"
@@ -60,13 +65,13 @@ export class MyForm extends React.Component {
             placeholder="Document Name"
           />
 
-          <AForm.Field
+          <Form.Field
             id="form-button-control-public"
             control={Button}
             content="Submit"
             label=""
           />
-        </AForm>
+        </Form>
       </Container>
     )
 
@@ -78,4 +83,4 @@ const mapDispatchToProps = dispatch => ({
   update: (userId, docname) => dispatch(updateDocThunk(userId, docname))
 })
 
-export default connect(null, mapDispatchToProps)(MyForm)
+export default withRouter(connect(null, mapDispatchToProps)(MyForm))
