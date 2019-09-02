@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
 import {Editor} from './Editor'
-import {Form} from './Form'
+import {MyForm} from './MyForm'
 
 /**
  * COMPONENT
@@ -11,13 +11,15 @@ import {Form} from './Form'
 
 export const UserHome = props => {
   const {email} = props
-  const username = email.slice(0, email.indexOf('@'))
+  const userId = props.id
+  const username = `u${props.id}`
+  console.log(username)
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
       {/* <Editor /> */}
-      <Form username={username} />
+      <MyForm userId={userId} username={username} />
     </div>
   )
 }
@@ -27,6 +29,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
+    id: state.user.id,
     email: state.user.email
   }
 }

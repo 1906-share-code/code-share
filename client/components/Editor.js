@@ -20,10 +20,11 @@ export class Editor extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match.params)
     //this.doc = connection.get('demo', 'inputbox')
     this.doc = connection.get(
       this.props.match.params.user,
-      this.props.match.params.name
+      this.props.match.params.docname
     )
     console.log(this.doc.collection)
     console.log(this.doc.id)
