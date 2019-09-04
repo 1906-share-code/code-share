@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //import connection from '../connect'
 import {withRouter} from 'react-router-dom'
-import {updateDocThunk} from '../store/doc'
+import {getDocsThunk, updateDocThunk} from '../store/doc'
 import {Container, Form, TextArea, Button} from 'semantic-ui-react'
 
 //Props has username availabe, so why dont we
@@ -10,22 +10,23 @@ import {Container, Form, TextArea, Button} from 'semantic-ui-react'
 //with username and also
 //make a thunk that posts new ones and routes to them here
 
-export class MyForm extends React.Component {
+export class MyForm extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      doc: ''
+      doc: '',
+      userId: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  // componentDidMount() {
-  //   //stuff
-
-  // }
+  componentDidMount() {
+    //stuff
+    //this.props.docs()
+  }
 
   handleChange(event) {
     this.setState({
@@ -36,7 +37,8 @@ export class MyForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('you clicked me')
-    let userId = this.props.props.id
+    //let userId = this.props.props.id
+    let userId = this.state.userId
     console.log(userId)
     let docname = this.state.doc
     console.log(docname)
@@ -55,6 +57,15 @@ export class MyForm extends React.Component {
     let main = (
       <Container>
         <Form onSubmit={this.handleSubmit}>
+          <TextArea
+            className=""
+            id="userId"
+            name="userId"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.userId}
+            placeholder="Share With"
+          />
           <TextArea
             className=""
             id="doc"
@@ -80,7 +91,8 @@ export class MyForm extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  update: (userId, docname) => dispatch(updateDocThunk(userId, docname))
+  update: (userId, docname) => dispatch(updateDocThunk(userId, docname)),
+  docs: () => dispatch(getDocsThunk())
 })
 
 export default withRouter(connect(null, mapDispatchToProps)(MyForm))

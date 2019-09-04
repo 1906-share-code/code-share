@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.put('/:userId/:docname', async (req, res, next) => {
+router.post('/:userId/:docname', async (req, res, next) => {
   try {
     //find or create document
     console.log('made it to router.put')
