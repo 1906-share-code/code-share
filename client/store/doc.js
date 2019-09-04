@@ -1,17 +1,17 @@
 import axios from 'axios'
 
-const UPDATE_DOCS_TABLE = 'UPDATE_DOCS_TABLE'
+//const UPDATE_DOCS_TABLE = 'UPDATE_DOCS_TABLE'
 const GET_DOCS = 'GET_DOCS'
 
-export const getDocs = doc => ({
+export const getDocs = document => ({
   type: GET_DOCS,
-  doc
+  document
 })
 
-export const updateDocsTable = doc => ({
-  type: UPDATE_DOCS_TABLE,
-  doc
-})
+// export const updateDocsTable = doc => ({
+//   type: UPDATE_DOCS_TABLE,
+//   doc
+// })
 
 export const getDocsThunk = (userId, docname) => async dispatch => {
   console.log('you made it to getDocshunkT')
@@ -20,22 +20,23 @@ export const getDocsThunk = (userId, docname) => async dispatch => {
   dispatch(getDocs())
 }
 
-export const updateDocThunk = (userId, docname) => async dispatch => {
-  console.log('you made it to updateDocThunk')
-  const {data} = await axios.post(`/api/docs/${userId}/${docname}`)
-  console.log(data)
-  dispatch(updateDocsTable())
-}
+// export const updateDocThunk = (userId, docname) => async dispatch => {
+//   console.log('you made it to updateDocThunk')
+//   const {data} = await axios.post(`/api/docs/${userId}/${docname}`)
+//   console.log(data)
+//   dispatch(updateDocsTable())
+// }
 
-export default function docReducer(doc = '', action) {
-  console.log('made it to reducer')
+export default function docReducer(document = '', action) {
+  //console.log('made it to reducer')
   console.log(action)
   switch (action.type) {
-    case UPDATE_DOCS_TABLE:
-      return action.doc
+    //case UPDATE_DOCS_TABLE:
+    //  return action.doc
     case GET_DOCS:
-      return action.doc
+      console.log('you made it to GET_DOCS in the reducer')
+      return action.document
     default:
-      return doc
+      return document
   }
 }

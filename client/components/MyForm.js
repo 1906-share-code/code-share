@@ -36,21 +36,9 @@ export class MyForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log('you clicked me')
-    //let userId = this.props.props.id
     let userId = this.state.userId
-    console.log(userId)
     let docname = this.state.doc
-    console.log(docname)
-    //console.log(this.state)
-    // console.log(this.props.match)
-    console.log(this.props)
-    //console.log(this.state)
-    //this.props.update(userId, docname)
-
-    //this.props.postDoc(userId, docname)
-    //this.props.history.push(`/docs/${userId}/${docname}`)
-    console.log(this.props.props.history.push(`/docs/${userId}/${docname}`))
+    this.props.props.history.push(`/docs/${userId}/${docname}`)
   }
 
   render() {
