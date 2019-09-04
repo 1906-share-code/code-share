@@ -4,15 +4,16 @@ View Live at https://code-share-code.herokuapp.com/
 ==================
 
 To install locally:
-=>Install mongodb. The easiest way is to use brew https://www.mongodb.com/
+=>Install mongodb. 
+The easiest way is to use brew https://www.mongodb.com/
 Make sure you have a data directory. 
 
-brew install mongodb
-sudo mkdir -p /data/db
-sudo chown -R...for mongo to store data
+  brew install mongodb
+  sudo mkdir -p /data/db
+  sudo chown -R...for mongo to store data
 
 =>Make sure you have a postgreSQL installed and have a https://www.postgresql.org/
-db named code-share and code-share-test
+db named code-share and db named code-share-test
 
 =>npm install
 
